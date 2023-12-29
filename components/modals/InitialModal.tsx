@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import FileUpload from "../FileUpload";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -61,14 +62,12 @@ const InitialModal: FC<InitialModalProps> = ({ }) => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="space-y-8 px-6">
               <div className="flex items-center justify-center text-center">
-                FILE UPLOAD
-                {/* <FormField
+                <FormField
                   control={form.control}
                   name="imageUrl"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        
                         <FileUpload
                           endpoint="serverImage"
                           value={field.value}
@@ -77,7 +76,7 @@ const InitialModal: FC<InitialModalProps> = ({ }) => {
                       </FormControl>
                     </FormItem>
                   )}
-                /> */}
+                />
               </div>
 
               <FormField
