@@ -3,6 +3,8 @@
 import { FC, useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
+import axios from "axios";
+
 import { useForm } from "react-hook-form";
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -10,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import FileUpload from "../FileUpload";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -26,6 +29,8 @@ const InitialModal: FC<InitialModalProps> = ({ }) => {
 
   const [isMounted, setIsMounted] = useState(false);
 
+  const router = useRouter()
+
   useEffect(() => {
     setIsMounted(true)
   }, [])
@@ -41,7 +46,16 @@ const InitialModal: FC<InitialModalProps> = ({ }) => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("values", values);
+    // console.log("values", values);
+    // create a server by calling the below api using Axios
+    try {
+      await axios.post('/api/servers', values);
+      form.reset();
+      router.refresh()
+      window.location.reload();
+    } catch (error) {
+      console.log("error", error);
+    }
   }
 
   if (!isMounted) return null
