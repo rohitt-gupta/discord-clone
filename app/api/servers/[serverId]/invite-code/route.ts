@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 import { currentProfile } from "@/lib/current-profile";
 import db from "@/lib/db";
 
+// THis API route is for creating new invite code, and it takes in the serverid from the params and 
+// send and update method to the server page and updates the invite code accordingly
 export async function PATCH(
   req: Request,
   { params }: { params: { serverId: string } }
@@ -18,6 +20,7 @@ export async function PATCH(
     if (!params.serverId) {
       return new NextResponse("Server ID Missing", { status: 400 });
     }
+
 
     const server = await db.server.update({
       where: {
