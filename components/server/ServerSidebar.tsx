@@ -38,7 +38,6 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({ serverId }) => {
   })
 
   // seperate text channels, audio channels and video channels from the server
-
   const textChannels = server?.channels.filter((channel) => channel.type === ChannelType.TEXT)
   const audioChannels = server?.channels.filter((channel) => channel.type === ChannelType.AUDIO)
   const videoChannels = server?.channels.filter((channel) => channel.type === ChannelType.VIDEO)
