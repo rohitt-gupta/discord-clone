@@ -9,6 +9,8 @@ import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Plus, Smile } from "lucide-react";
 import { Input } from "../ui/input";
 import { useModal } from "@/hooks/use-modal-store";
+import { EmojiPicker } from "../EmojiPicker";
+import { useRouter } from "next/navigation";
 
 export interface ChatInputProps {
   apiUrl: string;
@@ -25,6 +27,7 @@ const ChatInput: FC<ChatInputProps> = ({
   apiUrl, query, name, type
 }) => {
 
+  const router = useRouter()
   const { onOpen } = useModal()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,6 +46,8 @@ const ChatInput: FC<ChatInputProps> = ({
         query,
       })
       await axios.post(url, values)
+      form.reset();
+      router.refresh()
     } catch (error) {
       console.log("error in messages", error);
 
@@ -73,10 +78,10 @@ const ChatInput: FC<ChatInputProps> = ({
                     {...field}
                   />
                   <div className="absolute top-7 right-8">
-                    <Smile />
-                    {/* <EmojiPicker
+                    {/* <Smile /> */}
+                    <EmojiPicker
                       onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
-                    /> */}
+                    />
                   </div>
                 </div>
               </FormControl>
